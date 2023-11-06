@@ -30,8 +30,16 @@ async def on_ready():
     await bot.change_presence(status = disnake.Status.idle, activity = disnake.Activity(name = f'за {members} участниками', type = disnake.ActivityType.watching)) #Общее количество участников, за которыми следит бот (Находятся на серверах)
     await asyncio.sleep(15)
 
+@bot.slash_command(description="Пингануть бота")
+async def ping(inter):
+  ping_start = datetime.datetime.now()
+  ping_end = datetime.datetime.now()
+  response_time = ping_end - ping_start
+  response_time_in_ms = response_time.total_seconds() * 1000
+  await inter.response.send_message(f"Бот ответил за: {response_time_in_ms} мс")
+
 @bot.slash_command(description="Создаёт EMBED")
-@commands.has_any_role(1156306158836007004, 1156305559402860597)
+@commands.has_guild_permissions(administrator=True)
 async def createembed(inter, name: str, description: str, author: str, footer: str = " ", urlphoto: str = "https://cdn.discordapp.com/attachments/1020625502064607232/1021760499899187250/standard_1.gif"):
     embed = disnake.Embed(
         title= name,
