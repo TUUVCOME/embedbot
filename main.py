@@ -30,6 +30,16 @@ async def on_ready():
     await bot.change_presence(status = disnake.Status.idle, activity = disnake.Activity(name = f'за {members} участниками', type = disnake.ActivityType.watching)) #Общее количество участников, за которыми следит бот (Находятся на серверах)
     await asyncio.sleep(15)
 
+@bot.event
+async def on_member_join(member: disnake.Member):
+  guild = member.guild
+  hello = disnake.Embed(
+      title="Ого! Ты зашёл.",
+      description=f"Приветствую тебя, {member.mention}.\nДобро пожаловать на сервер **{guild.name}**!",
+    )
+
+  await member.send(embed=hello)
+
 @bot.slash_command(description="Пингануть бота")
 async def ping(inter):
   ping_start = datetime.datetime.now()
